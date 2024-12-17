@@ -1,3 +1,28 @@
 .container {
   padding: 8px;
 }
+
+.button {
+  all: unset;
+  border-radius: 12px;
+  padding: 8px;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  transition: all 0.4s;
+}
+
+.primary-button {
+  background: var(--secondary-color);
+  color: #fff;
+  border: 2px solid transparent;
+}
+
+.secondary-button {
+  background: transparent;
+  color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
+}

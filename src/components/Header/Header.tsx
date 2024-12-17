@@ -3,21 +3,27 @@ import "./header.css";
 
 export const Header = () => {
   return (
-    <header>
+    <header className="grey-scroll">
       <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-        Раздел-1
+        Познакомимся ближе
       </NavLink>
-      <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-        Раздел-2
+      <NavLink
+        to="/villa"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        Villa SPA
       </NavLink>
-      <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-        Раздел-3
+      <NavLink
+        to="/date"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        Устроить свидание
       </NavLink>
-      <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-        Раздел-4
-      </NavLink>
-      <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-        Раздел-5
+      <NavLink
+        to="/showcase"
+        className={({ isActive }) => (isActive ? "active" : "")}
+      >
+        Витрина Senechal
       </NavLink>
     </header>
   );

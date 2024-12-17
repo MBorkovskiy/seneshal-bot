@@ -5,15 +5,72 @@
 }
 
 body {
+  --primary-color: #06244a;
+  --secondary-color: #a68352;
+  --grey-color: #313137;
+  --green-color: #01592d;
+  --primary-font-regular: cormorant-regular, sans-serif;
+  --secondary-font-regular: noto-regular, sans-serif;
+  --primary-font-bold: cormorant-regular, sans-serif;
   height: 100vh;
   background: #fff;
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--secondary-font-regular);
   font-optical-sizing: auto;
   font-style: normal;
 }
 
 #root {
   height: 100%;
-
   overflow-y: scroll;
+}
+
+.grey-scroll {
+  scrollbar-color: rgba(120, 120, 120, 50%);
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(120, 120, 120, 50%);
+    border-radius: 2px;
+    margin: 0;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(120, 120, 120, 50%);
+  }
+}
+
+.hidden-scroll {
+  scrollbar-color: rgba(120, 120, 120, 0%);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+@font-face {
+  font-family: Cormorant-regular;
+  src: url("./fonts/Cormorant_Infant/CormorantInfant-Regular.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: Cormorant-bold;
+  src: url("./fonts/Cormorant_Infant/CormorantInfant-Bold.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: Noto-regular;
+  src: url("./fonts/Noto_Sans/static/NotoSans-Regular.ttf") format("truetype");
 }

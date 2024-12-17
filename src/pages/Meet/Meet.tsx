@@ -1,4 +1,4 @@
-export const MainPage = () => {
+export const Meet = () => {
   return (
     <div>
       <p>Главная страница</p>

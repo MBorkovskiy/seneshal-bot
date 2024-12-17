@@ -1,0 +1,10 @@
+.villa-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.top-villa-buttons {
+  display: flex;
+  gap: 15px;
+}

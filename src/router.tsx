@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Suspense } from "react";
 import { App } from "./App";
-import { MainPage } from "./pages/MainPage/MainPage";
+import { Meet } from "./pages/Meet/Meet";
+import { Villa } from "./pages/Villa/Villa";
+import { Date } from "./pages/Date/Date";
+import { Showcase } from "./pages/Showcase/Showcase";
 
 export const AppRouter = () =>
   createBrowserRouter([
@@ -14,7 +17,19 @@ export const AppRouter = () =>
       children: [
         {
           path: "/",
-          element: <MainPage />,
+          element: <Meet />,
+        },
+        {
+          path: "/villa",
+          element: <Villa />,
+        },
+        {
+          path: "/date",
+          element: <Date />,
+        },
+        {
+          path: "/showcase",
+          element: <Showcase />,
         },
       ],
     },
