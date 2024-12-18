@@ -5,7 +5,7 @@ export const Header = () => {
   return (
     <header className="grey-scroll">
       <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-        Познакомимся ближе
+        Знакомство
       </NavLink>
       <NavLink
         to="/villa"
@@ -17,13 +17,13 @@ export const Header = () => {
         to="/date"
         className={({ isActive }) => (isActive ? "active" : "")}
       >
-        Устроить свидание
+        Свидание
       </NavLink>
       <NavLink
         to="/showcase"
         className={({ isActive }) => (isActive ? "active" : "")}
       >
-        Витрина Senechal
+        Витрина
       </NavLink>
     </header>
   );

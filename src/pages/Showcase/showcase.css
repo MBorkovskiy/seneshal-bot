@@ -10,3 +10,15 @@
     font-weight: bold;
   }
 }
+.category-images {
+  display: flex;
+  gap: 15px;
+  overflow-y: scroll;
+  scroll-snap-type: x mandatory;
+
+  img {
+    width: 70vw;
+    height: 70vw;
+    scroll-snap-align: start;
+  }
+}
