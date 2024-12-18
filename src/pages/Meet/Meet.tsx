@@ -30,12 +30,7 @@ export const Meet = () => {
     dayjs(new Date())
   );
 
-  const sendHandler = () => {
-    const phoneNumber = "89269588045"; // Укажите номер телефона (без плюса, с кодом страны)
-
-    // Открыть WhatsApp в новой вкладке
-    window.open(`https://wa.me/${phoneNumber}?text=encodedMessage`, "_blank");
-  };
+  const sendHandler = () => {};
 
   return (
     <div className="meet-wrapper">
