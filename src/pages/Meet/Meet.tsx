@@ -30,7 +30,7 @@ export const Meet = () => {
             onChange={(e) => setIAm(e.target.value)}
             label="Я"
           >
-            <MenuItem value={"left"}>Корпаративный</MenuItem>
+            <MenuItem value={"left"}>Корпоративный</MenuItem>
             <MenuItem value={"right"}>Частный</MenuItem>
           </Select>
         </FormControl>
