@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./showcase.css";
 import axios from "axios";
+import { Loader } from "../../components/Loader/Loader";
 
 interface IImages {
   original_filename: string;
@@ -9,9 +10,11 @@ interface IImages {
 
 export const Showcase = () => {
   const [category, setCategory] = useState<Record<string, IImages[]>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchFiles = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get("https://api.uploadcare.com/files/", {
           headers: {
@@ -28,23 +31,32 @@ export const Showcase = () => {
         setCategory(category);
       } catch (error) {
         console.error("Ошибка при получении файлов:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchFiles();
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div className="showcase-wrapper">
       {Object.keys(category)?.map((cat) => (
-        <>
+        <div key={cat}>
           <p>{cat}</p>
           <div className="category-images">
             {category[cat]?.map((img) => (
-              <img src={img.original_file_url} alt="" />
+              <img
+                key={img.original_file_url}
+                src={img.original_file_url}
+                alt=""
+              />
             ))}
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

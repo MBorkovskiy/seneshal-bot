@@ -17,6 +17,13 @@ body {
   font-family: var(--secondary-font-regular);
   font-optical-sizing: auto;
   font-style: normal;
+  .rdp-root {
+    --rdp-accent-color: #06244a; /* Change the accent color to indigo. */
+    --rdp-accent-background-color: #f0f0f0; /* Change the accent background color. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 #root {

@@ -6,6 +6,7 @@ header {
   background-color: var(--primary-color);
   color: white;
   padding: 8px;
+  margin-bottom: 15px;
 
   a {
     all: unset;
