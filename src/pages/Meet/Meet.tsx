@@ -2,6 +2,7 @@ import { useState } from "react";
 import "react-day-picker/style.css";
 import "./meet.css";
 import {
+  Checkbox,
   FormControl,
   InputLabel,
   MenuItem,
@@ -18,6 +19,9 @@ export const Meet = () => {
   const [format, setFormat] = useState("");
   const [customFormat, setCustomFormat] = useState("");
   const [isTripCeremony, setIsTripCeremony] = useState("");
+  const [receive, setReceive] = useState("");
+  const [withPet, setWithPet] = useState(false);
+  const [interesting, setInteresting] = useState("");
   const [date, setDate] = useState<Dayjs | string | null>(dayjs(new Date()));
 
   return (
@@ -115,6 +119,119 @@ export const Meet = () => {
               </Select>
             </FormControl>
           </div>
+        </>
+      )}
+      {iAm === "right" && (
+        <>
+          <div>
+            <div className="step">
+              <FormControl fullWidth size="small">
+                <InputLabel>Я приезжаю</InputLabel>
+                <Select
+                  value={receive}
+                  onChange={(e) => setReceive(e.target.value)}
+                  label="Я приезжаю"
+                >
+                  <MenuItem value={"Один"}>Один</MenuItem>
+                  <MenuItem value={"С парой"}>С парой</MenuItem>
+                  <MenuItem value={"С семьей"}>С семьей</MenuItem>
+                </Select>
+              </FormControl>
+              <div className="withPet">
+                <Checkbox
+                  checked={withPet}
+                  onChange={() => setWithPet((bool) => !bool)}
+                />
+                <span>С питомцем</span>
+              </div>
+            </div>
+            {receive === "С семьей" && (
+              <p className="description">
+                Для отдыха с детьми семейные пары чаще всего выбирают Диамант,
+                Базель, Латиф
+              </p>
+            )}
+            {withPet && (
+              <p className="description">
+                Проживание с животными доступно только в номерах Диамант,
+                Базель, Латиф
+              </p>
+            )}
+          </div>
+
+          <div className="step">
+            <FormControl fullWidth size="small">
+              <InputLabel>Меня интересует</InputLabel>
+              <Select
+                value={interesting}
+                onChange={(e) => setInteresting(e.target.value)}
+                label="Меня интересует"
+              >
+                <MenuItem value={"Активный отдых"}>Активный отдых</MenuItem>
+                <MenuItem value={"Размеренный отдых"}>
+                  Размеренный отдых
+                </MenuItem>
+                {receive === "С семьей" && (
+                  <MenuItem value={"Семейный отдых"}>Семейный отдых</MenuItem>
+                )}
+              </Select>
+            </FormControl>
+          </div>
+          {interesting === "Активный отдых" && (
+            <div className="checkboxes">
+              <div>
+                <Checkbox />
+                <p>Катание на лошадях</p>
+              </div>
+
+              <div>
+                <Checkbox />
+                <p>Катание на санях, запряженные хаски или оленями</p>
+              </div>
+              <div>
+                <Checkbox />
+                <p>Мастер-классы</p>
+              </div>
+              <div>
+                <Checkbox />
+                <p>Йога</p>
+              </div>
+            </div>
+          )}
+          {interesting === "Размеренный отдых" && (
+            <div className="checkboxes">
+              <div>
+                <Checkbox />
+                <p>СПА-программы</p>
+              </div>
+
+              <div>
+                <Checkbox />
+                <p>Chefs Table</p>
+              </div>
+            </div>
+          )}
+          {interesting === "Семейный отдых" && (
+            <div className="checkboxes">
+              <div>
+                <Checkbox />
+                <p>Мастер-классы для детей</p>
+              </div>
+
+              <div>
+                <Checkbox />
+                <p>Аквагрим</p>
+              </div>
+              <div>
+                <Checkbox />
+                <p>Кукольный театр</p>
+              </div>
+              <div>
+                <Checkbox />
+                <p>Услуги няни</p>
+              </div>
+            </div>
+          )}
         </>
       )}
       <button disabled className="button secondary-button">

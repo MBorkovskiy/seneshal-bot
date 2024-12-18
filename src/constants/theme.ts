@@ -34,7 +34,7 @@ const theme: CssVarsThemeOptions = createTheme({
     borderRadius: 12,
   },
   typography: {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "noto-regular",
     button: {
       textTransform: "none",
     },

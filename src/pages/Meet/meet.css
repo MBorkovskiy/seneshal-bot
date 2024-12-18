@@ -14,3 +14,24 @@
   align-items: center;
   gap: 15px;
 }
+.withPet {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 220px;
+}
+
+.description {
+  font-size: 12px;
+  padding: 0 12px;
+}
+
+.checkboxes {
+  display: flex;
+  flex-direction: column;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
