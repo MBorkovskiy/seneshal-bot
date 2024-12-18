@@ -32,15 +32,9 @@ export const Meet = () => {
 
   const sendHandler = () => {
     const phoneNumber = "89269588045"; // Укажите номер телефона (без плюса, с кодом страны)
-    const message =
-      "Привет! Это сообщение отправлено из моего React-приложения.";
-    const encodedMessage = encodeURIComponent(message);
 
     // Открыть WhatsApp в новой вкладке
-    window.open(
-      `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
-      "_blank"
-    );
+    window.open(`https://wa.me/${phoneNumber}?text=encodedMessage`, "_blank");
   };
 
   return (
