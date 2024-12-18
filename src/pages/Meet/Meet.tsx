@@ -10,8 +10,9 @@ import {
   TextField,
 } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
-
+import InfoIcon from "@mui/icons-material/Info";
 import { CustomDatePicker } from "../../components/CustomDatePicker/CustomDatePicker";
+
 export const Meet = () => {
   const [iAm, setIAm] = useState("");
   const [peopleCount, setPeopleCount] = useState("");
@@ -22,7 +23,25 @@ export const Meet = () => {
   const [receive, setReceive] = useState("");
   const [withPet, setWithPet] = useState(false);
   const [interesting, setInteresting] = useState("");
-  const [date, setDate] = useState<Dayjs | string | null>(dayjs(new Date()));
+  const [startDate, setStartDate] = useState<Dayjs | string | null>(
+    dayjs(new Date())
+  );
+  const [endDate, setEndDate] = useState<Dayjs | string | null>(
+    dayjs(new Date())
+  );
+
+  const sendHandler = () => {
+    const phoneNumber = "89269588045"; // Укажите номер телефона (без плюса, с кодом страны)
+    const message =
+      "Привет! Это сообщение отправлено из моего React-приложения.";
+    const encodedMessage = encodeURIComponent(message);
+
+    // Открыть WhatsApp в новой вкладке
+    window.open(
+      `https://wa.me/${phoneNumber}?text=${encodedMessage}`,
+      "_blank"
+    );
+  };
 
   return (
     <div className="meet-wrapper">
@@ -41,9 +60,15 @@ export const Meet = () => {
       </div>
       <div className="step">
         <CustomDatePicker
-          value={dayjs(date)}
-          setValue={setDate}
-          label={"Меня интересует"}
+          value={dayjs(startDate)}
+          setValue={setStartDate}
+          label={"Дата заселения"}
+        />
+        -
+        <CustomDatePicker
+          value={dayjs(endDate)}
+          setValue={setEndDate}
+          label={"Дата выселения"}
         />
       </div>
       {iAm === "left" && (
@@ -146,19 +171,24 @@ export const Meet = () => {
               </div>
             </div>
             {receive === "С семьей" && (
-              <p className="description">
-                Для отдыха с детьми семейные пары чаще всего выбирают Диамант,
-                Базель, Латиф
-              </p>
+              <div className="description">
+                <InfoIcon color="primary" />
+                <p className="description">
+                  Для отдыха с детьми семейные пары чаще всего выбирают Диамант,
+                  Базель, Латиф
+                </p>
+              </div>
             )}
             {withPet && (
-              <p className="description">
-                Проживание с животными доступно только в номерах Диамант,
-                Базель, Латиф
-              </p>
+              <div className="description">
+                <InfoIcon color="primary" />
+                <p className="description">
+                  Проживание с животными доступно только в номерах Диамант,
+                  Базель, Латиф
+                </p>
+              </div>
             )}
           </div>
-
           <div className="step">
             <FormControl fullWidth size="small">
               <InputLabel>Меня интересует</InputLabel>
@@ -183,7 +213,6 @@ export const Meet = () => {
                 <Checkbox />
                 <p>Катание на лошадях</p>
               </div>
-
               <div>
                 <Checkbox />
                 <p>Катание на санях, запряженные хаски или оленями</p>
@@ -234,7 +263,11 @@ export const Meet = () => {
           )}
         </>
       )}
-      <button disabled className="button secondary-button">
+      <button
+        type="button"
+        className="button secondary-button"
+        onClick={sendHandler}
+      >
         Отправить заявку
       </button>
     </div>

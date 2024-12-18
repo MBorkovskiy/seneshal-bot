@@ -17,11 +17,16 @@
 .withPet {
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
-  width: 220px;
+
+  span {
+    white-space: nowrap;
+  }
 }
 
 .description {
+  display: flex;
+  gap: 5px;
+  align-items: center;
   font-size: 12px;
   padding: 0 12px;
 }
