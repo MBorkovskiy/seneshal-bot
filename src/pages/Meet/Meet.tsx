@@ -57,7 +57,7 @@ export const Meet = () => {
                 <MenuItem value={"Девичник"}>Девичник</MenuItem>
                 <MenuItem value={"Мальчишник"}>Мальчишник</MenuItem>
                 <MenuItem value={"Ретрит"}>Ретрит</MenuItem>
-                <MenuItem value={""}>Свое мероприятие</MenuItem>
+                <MenuItem value={"Свое мероприятие"}>Свое мероприятие</MenuItem>
               </Select>
             </FormControl>
           </div>
