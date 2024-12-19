@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import "react-day-picker/style.css";
 import "./meet.css";
 import {
@@ -7,11 +7,14 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
 } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import InfoIcon from "@mui/icons-material/Info";
 import { CustomDatePicker } from "../../components/CustomDatePicker/CustomDatePicker";
+import emailjs from "@emailjs/browser";
+import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 
 export const Meet = () => {
   const [iAm, setIAm] = useState("");
@@ -23,6 +26,10 @@ export const Meet = () => {
   const [receive, setReceive] = useState("");
   const [withPet, setWithPet] = useState(false);
   const [interesting, setInteresting] = useState("");
+  const [childInteresting, setChildInteresting] = useState("");
+  const [tel, setTel] = useState("");
+  const [telError, setTelError] = useState(true);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
   const [startDate, setStartDate] = useState<Dayjs | string | null>(
     dayjs(new Date())
   );
@@ -30,10 +37,59 @@ export const Meet = () => {
     dayjs(new Date())
   );
 
-  const sendHandler = () => {};
+  const sendHandler = (e: FormEvent) => {
+    e.preventDefault();
+    const templateParams = {
+      message: `Я - ${iAm}
+       Количество людей-${peopleCount}
+       Потребуется ли проживание-${isLiving}
+       Мероприятие-${format}
+       Свое мероприятие-${customFormat}
+       Выездная церемония-${isTripCeremony}
+       Я приезжаю-${receive}
+       С питомцем-${withPet}
+       Интересы-${interesting}
+       Интересы ребенка-${childInteresting}
+       Телефон ${tel}
+       Дата заезда-${dayjs(startDate).toISOString().split("T")[0]}
+       Дата выезда-${dayjs(endDate).toISOString().split("T")[0]}`,
+    };
+    emailjs
+      .send("service_wiqis5e", "template_mojkzkq", templateParams, {
+        publicKey: "Z-CHf5po4Vznvhx6a",
+      })
+      .then(
+        (response) => {
+          setOpenSnackBar(true);
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        (err) => {
+          console.log("FAILED...", err);
+        }
+      );
+  };
+
+  const telHandler = (e: string) => {
+    const isValid = matchIsValidTel(e);
+
+    if (isValid) {
+      setTelError(false);
+    } else {
+      setTelError(true);
+    }
+
+    setTel(e);
+  };
 
   return (
     <div className="meet-wrapper">
+      <Snackbar
+        open={openSnackBar}
+        onClose={() => setOpenSnackBar(false)}
+        message="Заявка успешно отправлена"
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={3000}
+      />
       <div className="step">
         <FormControl fullWidth size="small">
           <InputLabel>Я</InputLabel>
@@ -41,6 +97,7 @@ export const Meet = () => {
             value={iAm}
             onChange={(e) => setIAm(e.target.value)}
             label="Я"
+            name="message"
           >
             <MenuItem value={"left"}>Корпоративный</MenuItem>
             <MenuItem value={"right"}>Частный</MenuItem>
@@ -190,9 +247,6 @@ export const Meet = () => {
                 <MenuItem value={"Размеренный отдых"}>
                   Размеренный отдых
                 </MenuItem>
-                {receive === "С семьей" && (
-                  <MenuItem value={"Семейный отдых"}>Семейный отдых</MenuItem>
-                )}
               </Select>
             </FormControl>
           </div>
@@ -229,7 +283,22 @@ export const Meet = () => {
               </div>
             </div>
           )}
-          {interesting === "Семейный отдых" && (
+          {receive === "С семьей" && (
+            <div className="step">
+              <FormControl fullWidth size="small">
+                <InputLabel>Моего ребенка интересует</InputLabel>
+                <Select
+                  value={childInteresting}
+                  onChange={(e) => setChildInteresting(e.target.value)}
+                  label="Моего ребенка интересует"
+                >
+                  <MenuItem value={"Семейный отдых"}>Семейный отдых</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          )}
+
+          {childInteresting === "Семейный отдых" && (
             <div className="checkboxes">
               <div>
                 <Checkbox />
@@ -252,10 +321,18 @@ export const Meet = () => {
           )}
         </>
       )}
+      <MuiTelInput
+        value={tel}
+        onChange={telHandler}
+        forceCallingCode
+        onlyCountries={["RU"]}
+        defaultCountry="RU"
+        error={telError}
+      />
       <button
-        type="button"
-        className="button secondary-button"
         onClick={sendHandler}
+        disabled={telError}
+        className="button secondary-button"
       >
         Отправить заявку
       </button>
