@@ -19,3 +19,7 @@
 .rdrDayToday .rdrDayNumber span:after {
   background-color: var(--primary-color);
 }
+.rdrDateDisplayItem input {
+  pointer-events: none;
+  cursor: not-allowed;
+}
