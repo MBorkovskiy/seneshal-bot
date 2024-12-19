@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import "react-day-picker/style.css";
 import "./meet.css";
 import {
+  Alert,
   Checkbox,
   FormControl,
   InputLabel,
@@ -10,13 +11,14 @@ import {
   Snackbar,
   TextField,
 } from "@mui/material";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import InfoIcon from "@mui/icons-material/Info";
-import { CustomDatePicker } from "../../components/CustomDatePicker/CustomDatePicker";
 import emailjs from "@emailjs/browser";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
+import { CustomRangeDatePicker } from "../../components/CustomRangeDatePicker/CustomRangeDatePicker";
 
 export const Meet = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [iAm, setIAm] = useState("");
   const [peopleCount, setPeopleCount] = useState("");
   const [isLiving, setIsLiving] = useState("");
@@ -30,15 +32,17 @@ export const Meet = () => {
   const [tel, setTel] = useState("");
   const [telError, setTelError] = useState(true);
   const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [startDate, setStartDate] = useState<Dayjs | string | null>(
-    dayjs(new Date())
-  );
-  const [endDate, setEndDate] = useState<Dayjs | string | null>(
-    dayjs(new Date())
-  );
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
 
   const sendHandler = (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     const templateParams = {
       message: `Я - ${iAm}
        Количество людей-${peopleCount}
@@ -47,12 +51,12 @@ export const Meet = () => {
        Свое мероприятие-${customFormat}
        Выездная церемония-${isTripCeremony}
        Я приезжаю-${receive}
-       С питомцем-${withPet}
+       С питомцем-${withPet ? "Да" : "Нет"}
        Интересы-${interesting}
        Интересы ребенка-${childInteresting}
        Телефон ${tel}
-       Дата заезда-${dayjs(startDate).toISOString().split("T")[0]}
-       Дата выезда-${dayjs(endDate).toISOString().split("T")[0]}`,
+       Дата заезда-${dayjs(range[0].startDate).toISOString().split("T")[0]}
+       Дата выезда-${dayjs(range[0].endDate).toISOString().split("T")[0]}`,
     };
     emailjs
       .send("service_wiqis5e", "template_mojkzkq", templateParams, {
@@ -67,6 +71,7 @@ export const Meet = () => {
           console.log("FAILED...", err);
         }
       );
+    setIsLoading(false);
   };
 
   const telHandler = (e: string) => {
@@ -86,10 +91,13 @@ export const Meet = () => {
       <Snackbar
         open={openSnackBar}
         onClose={() => setOpenSnackBar(false)}
-        message="Заявка успешно отправлена"
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
-      />
+      >
+        <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
+          Заявка успешно отправлена
+        </Alert>
+      </Snackbar>
       <div className="step">
         <FormControl fullWidth size="small">
           <InputLabel>Я</InputLabel>
@@ -97,27 +105,16 @@ export const Meet = () => {
             value={iAm}
             onChange={(e) => setIAm(e.target.value)}
             label="Я"
-            name="message"
           >
-            <MenuItem value={"left"}>Корпоративный</MenuItem>
-            <MenuItem value={"right"}>Частный</MenuItem>
+            <MenuItem value={"Корпоративный"}>Корпоративный</MenuItem>
+            <MenuItem value={"Частный"}>Частный</MenuItem>
           </Select>
         </FormControl>
       </div>
-      <div className="step">
-        <CustomDatePicker
-          value={dayjs(startDate)}
-          setValue={setStartDate}
-          label={"Дата заселения"}
-        />
-        -
-        <CustomDatePicker
-          value={dayjs(endDate)}
-          setValue={setEndDate}
-          label={"Дата выселения"}
-        />
+      <div className="date-range">
+        <CustomRangeDatePicker range={range} setRange={setRange} />
       </div>
-      {iAm === "left" && (
+      {iAm === "Корпоративный" && (
         <>
           <div className="step">
             <FormControl fullWidth size="small">
@@ -192,7 +189,7 @@ export const Meet = () => {
           </div>
         </>
       )}
-      {iAm === "right" && (
+      {iAm === "Частный" && (
         <>
           <div>
             <div className="step">
@@ -331,7 +328,7 @@ export const Meet = () => {
       />
       <button
         onClick={sendHandler}
-        disabled={telError}
+        disabled={telError || isLoading}
         className="button secondary-button"
       >
         Отправить заявку

@@ -1,5 +1,7 @@
 .container {
   padding: 8px;
+  overflow-y: scroll;
+  flex-shrink: 1;
 }
 
 .button {

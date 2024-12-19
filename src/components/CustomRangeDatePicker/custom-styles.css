@@ -1,0 +1,21 @@
+.rdrSelected,
+.rdrInRange,
+.rdrStartEdge,
+.rdrEndEdge {
+  background-color: var(--secondary-color);
+  border: none;
+}
+
+.rdrDateDisplayItemActive {
+  border-color: var(--secondary-color);
+}
+
+.rdrDayStartPreview,
+.rdrDayInPreview,
+.rdrDayEndPreview {
+  border: none;
+}
+
+.rdrDayToday .rdrDayNumber span:after {
+  background-color: var(--primary-color);
+}
