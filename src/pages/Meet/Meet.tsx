@@ -42,7 +42,7 @@ export const Meet = () => {
 
   const sendHandler = (e: FormEvent) => {
     setIsLoading(true);
-    // e.preventDefault();
+    e.preventDefault();
     const templateParams = {
       message: `Я - ${iAm}
        Количество людей-${peopleCount}
