@@ -54,16 +54,26 @@ const theme: CssVarsThemeOptions = createTheme({
       lineHeight: 1.5,
     },
   },
-  //   components: {
-  //     MuiAppBar: {
-  //       styleOverrides: {
-  //         root: {
-  //           backgroundColor: "#d7e3ff",
-  //           color: "#000000",
-  //         },
-  //       },
-  //     },
-  //   },
+
+  components: {
+    MuiSnackbar: {
+      styleOverrides: {
+        root: {
+          "&.MuiSnackbar-root.MuiSnackbar-anchorOriginTopCenter": {
+            top: 60,
+          },
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#d7e3ff",
+          color: "#000000",
+        },
+      },
+    },
+  },
 });
 
 export { theme };

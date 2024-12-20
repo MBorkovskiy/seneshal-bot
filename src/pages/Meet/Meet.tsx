@@ -1,5 +1,4 @@
 import { FormEvent, useState } from "react";
-import "react-day-picker/style.css";
 import "./meet.css";
 import {
   Alert,
@@ -31,7 +30,7 @@ export const Meet = () => {
   const [childInteresting, setChildInteresting] = useState("");
   const [tel, setTel] = useState("");
   const [telError, setTelError] = useState(true);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState(true);
   const [range, setRange] = useState([
     {
       startDate: new Date(),
