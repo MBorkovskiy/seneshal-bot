@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import "./meet.css";
 import {
   Alert,
@@ -32,6 +32,7 @@ export const Meet = () => {
   const [tel, setTel] = useState("");
   const [telError, setTelError] = useState(true);
   const [openSnackBar, setOpenSnackBar] = useState("");
+  const [disabledDate, setDisabledDate] = useState<Date | null>(null);
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -39,6 +40,18 @@ export const Meet = () => {
       key: "selection",
     },
   ]);
+
+  useEffect(() => {
+    if (range[0].startDate.getDay() === 5 && range[0].endDate.getDay() === 6) {
+      const month = range[0].startDate.getMonth();
+      const year = range[0].startDate.getFullYear();
+      const blockedDate = range[0].startDate.getDate() + 1;
+
+      setDisabledDate(new Date(year, month, blockedDate));
+    } else {
+      setDisabledDate(null);
+    }
+  }, [range[0].startDate, range[0].endDate]);
 
   const sendHandler = (e: FormEvent) => {
     setIsLoading(true);
@@ -117,7 +130,11 @@ export const Meet = () => {
         </FormControl>
       </div>
       <div className="date-range">
-        <CustomRangeDatePicker range={range} setRange={setRange} />
+        <CustomRangeDatePicker
+          range={range}
+          setRange={setRange}
+          disabledDate={disabledDate}
+        />
       </div>
       {iAm === "Корпоративное" && (
         <>
