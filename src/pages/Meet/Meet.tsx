@@ -31,7 +31,7 @@ export const Meet = () => {
   const [childInteresting, setChildInteresting] = useState("");
   const [tel, setTel] = useState("");
   const [telError, setTelError] = useState(true);
-  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [openSnackBar, setOpenSnackBar] = useState("");
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -44,7 +44,7 @@ export const Meet = () => {
     setIsLoading(true);
     e.preventDefault();
     const templateParams = {
-      message: `Я - ${iAm}
+      message: `Направление - ${iAm}
        Количество людей-${peopleCount}
        Потребуется ли проживание-${isLiving}
        Мероприятие-${format}
@@ -63,14 +63,13 @@ export const Meet = () => {
         publicKey: "Z-CHf5po4Vznvhx6a",
       })
       .then(
-        (response) => {
+        () => {
           setIsLoading(false);
-          setOpenSnackBar(true);
-          console.log("SUCCESS!", response.status, response.text);
+          setOpenSnackBar("Заявка успешно отправлена");
         },
-        (err) => {
+        () => {
           setIsLoading(false);
-          console.log("FAILED...", err);
+          setOpenSnackBar("Ошибка,пожалуйста,попробуйте позже");
         }
       );
   };
@@ -95,13 +94,13 @@ export const Meet = () => {
         </div>
       )}
       <Snackbar
-        open={openSnackBar}
-        onClose={() => setOpenSnackBar(false)}
+        open={!!openSnackBar}
+        onClose={() => setOpenSnackBar("")}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
       >
         <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
-          Заявка успешно отправлена
+          {openSnackBar}
         </Alert>
       </Snackbar>
       <div className="step">
