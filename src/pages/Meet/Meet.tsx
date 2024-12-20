@@ -30,7 +30,7 @@ export const Meet = () => {
   const [childInteresting, setChildInteresting] = useState("");
   const [tel, setTel] = useState("");
   const [telError, setTelError] = useState(true);
-  const [openSnackBar, setOpenSnackBar] = useState(true);
+  const [openSnackBar, setOpenSnackBar] = useState(false);
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -99,21 +99,21 @@ export const Meet = () => {
       </Snackbar>
       <div className="step">
         <FormControl fullWidth size="small">
-          <InputLabel>Я</InputLabel>
+          <InputLabel>Выберите направление</InputLabel>
           <Select
             value={iAm}
             onChange={(e) => setIAm(e.target.value)}
-            label="Я"
+            label="Выберите направление"
           >
-            <MenuItem value={"Корпоративный"}>Корпоративный</MenuItem>
-            <MenuItem value={"Частный"}>Частный</MenuItem>
+            <MenuItem value={"Корпоративное"}>Корпоративное</MenuItem>
+            <MenuItem value={"Частное"}>Частное</MenuItem>
           </Select>
         </FormControl>
       </div>
       <div className="date-range">
         <CustomRangeDatePicker range={range} setRange={setRange} />
       </div>
-      {iAm === "Корпоративный" && (
+      {iAm === "Корпоративное" && (
         <>
           <div className="step">
             <FormControl fullWidth size="small">
@@ -188,7 +188,7 @@ export const Meet = () => {
           </div>
         </>
       )}
-      {iAm === "Частный" && (
+      {iAm === "Частное" && (
         <>
           <div>
             <div className="step">
@@ -324,6 +324,7 @@ export const Meet = () => {
         onlyCountries={["RU"]}
         defaultCountry="RU"
         error={telError}
+        size="small"
       />
       <button
         onClick={sendHandler}
