@@ -140,6 +140,14 @@ export const Meet = () => {
           disabledDate={disabledDate}
         />
       </div>
+      {disabledDate && (
+        <div className="description">
+          <InfoIcon color="error" />
+          <p className="description">
+            Бронирование осуществляется от двух ночей
+          </p>
+        </div>
+      )}
       {iAm === "Корпоративное" && (
         <>
           <div className="step">
