@@ -42,7 +42,11 @@ export const Meet = () => {
   ]);
 
   useEffect(() => {
-    if (range[0].startDate.getDay() === 5 && range[0].endDate.getDay() === 6) {
+    if (
+      range[0].startDate.getDay() === 5 &&
+      range[0].endDate.getDay() === 6 &&
+      range[0].startDate.getDate() + 1 === range[0].endDate.getDate()
+    ) {
       const month = range[0].startDate.getMonth();
       const year = range[0].startDate.getFullYear();
       const blockedDate = range[0].startDate.getDate() + 1;
