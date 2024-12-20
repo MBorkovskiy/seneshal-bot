@@ -15,6 +15,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import emailjs from "@emailjs/browser";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { CustomRangeDatePicker } from "../../components/CustomRangeDatePicker/CustomRangeDatePicker";
+import { Loader } from "../../components/Loader/Loader";
 
 export const Meet = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,8 +41,8 @@ export const Meet = () => {
   ]);
 
   const sendHandler = (e: FormEvent) => {
-    e.preventDefault();
     setIsLoading(true);
+    // e.preventDefault();
     const templateParams = {
       message: `Я - ${iAm}
        Количество людей-${peopleCount}
@@ -63,14 +64,15 @@ export const Meet = () => {
       })
       .then(
         (response) => {
+          setIsLoading(false);
           setOpenSnackBar(true);
           console.log("SUCCESS!", response.status, response.text);
         },
         (err) => {
+          setIsLoading(false);
           console.log("FAILED...", err);
         }
       );
-    setIsLoading(false);
   };
 
   const telHandler = (e: string) => {
@@ -87,6 +89,11 @@ export const Meet = () => {
 
   return (
     <div className="meet-wrapper">
+      {isLoading && (
+        <div className="loader-wrapper">
+          <Loader />
+        </div>
+      )}
       <Snackbar
         open={openSnackBar}
         onClose={() => setOpenSnackBar(false)}
@@ -328,7 +335,7 @@ export const Meet = () => {
       />
       <button
         onClick={sendHandler}
-        disabled={telError || isLoading}
+        disabled={telError}
         className="button secondary-button"
       >
         Отправить заявку

@@ -33,6 +33,14 @@ body {
   flex-direction: column;
 }
 
+.loader-wrapper {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  z-index: 5;
+}
+
 .grey-scroll {
   scrollbar-color: rgba(120, 120, 120, 50%);
 
